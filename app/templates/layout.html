@@ -1,0 +1,31 @@
+<!doctype html>
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Flask Blog</title>
+        <link rel="stylesheet" href="/static/css/foundation.css" />
+        <script src="/static/js/vendor/modernizr.js"></script>
+    </head>
+    <body>
+        {% block messages %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class=flashes>
+                        {% for category,message in messages %}
+                            <li class="alert alert-{{ category }}">
+                                {{ message }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        {% endblock %}            
+        {% block body %}{% endblock %}      
+        <script src="/static/js/vendor/jquery.js"></script>
+        <script src="/static/js/foundation.min.js"></script>
+        <script>
+            $(document).foundation();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,11 @@
+
+{% extends "layout.html" %}
+  {% block body %}
+
+    {% from 'languages/_form.html' import language_form %}
+
+    {{  language_form(form_name = 'Add',) }}
+
+
+
+  {% endblock %}

@@ -1,0 +1,30 @@
+
+{% macro language_form(form_name = '', language_language_code = '',language_language_name = '',language_dir = '') %}
+
+        <div class="center row">
+            <div class="large-8 columns">
+            <h4> {{ form_name }} Languages</h4>
+               <fieldset>
+                <form action="" method="POST" >
+  
+				 
+           <label>Language_Code
+           <small>required</small><input type="text" name="language_code" value="{{ language_language_code }}"  required/>
+           </label> 
+           <label>Language_Name
+           <small>required</small><input type="text" name="language_name" value="{{ language_language_name }}"  required/>
+           </label> 
+           <label>Dir
+           <small>required</small><input type="text" name="dir" value="{{ language_dir }}"  required/>
+           </label> 
+
+				   <button class="button "  type="submit">{{ form_name }}</button>
+                  </form>
+                </fieldset>
+
+
+				</div>
+			  </div>
+
+
+{% endmacro %}

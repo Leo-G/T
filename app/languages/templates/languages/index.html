@@ -1,0 +1,25 @@
+
+{% extends "layout.html" %}
+  {% block body %}
+
+<div class="center row">
+      <div class="small-12 columns"><p><h4 style="display:inline">Languages </h4><a href="{{ url_for('languages.language_add')}}">Add new</a></p></div>
+    </div>
+
+      <!-- Main Page Content-->
+ <div class="center row">
+             <div class="small-12 columns">
+            <table> <thead><tr> <th>language_code</th>  <th>language_name</th>  <th>dir</th> </tr></thead>
+             <tbody>
+             {% for result in results %}
+              <tr><td>{{ result['language_code'] }}</td><td>{{ result['language_name'] }}</td><td>{{ result['dir'] }}</td>
+                 <td><a href="{{ url_for('languages.language_update', id=result['id']) }}">Edit</a>        <a href="{{ url_for('languages.language_delete', id=result['id']) }}">Delete</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+{% endblock %}

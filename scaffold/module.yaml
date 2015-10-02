@@ -1,0 +1,21 @@
+users:
+ - email:Email
+ - password:String
+ - name:String
+ - address:Text
+ - is_active:Boolean
+ - creation_time:DateTime
+ - modification_time:DateTime
+ - role:Integer
+
+roles:
+ - name:String
+
+translator_languages:
+ - user_id:Integer
+ - language_code:String
+ 
+languages:
+ - language_code:String
+ - language_name:String
+ - dir:String

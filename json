@@ -1,0 +1,21 @@
+{
+  "data": {
+    "type": "users",
+    "attributes": {
+      "name": "leo",
+      "email": "leo@leog.in",
+      "is_active": "true"
+      "role":"admin",
+     
+      }
+     }
+  }
+{
+  "data": {
+    "type": "roles",
+    "attributes": {
+      "name": "admin6"
+    }
+  }
+  
+}

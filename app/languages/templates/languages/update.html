@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+  {% block body %}
+
+		{% from 'languages/_form.html' import language_form %}
+
+    {{ language_form(form_name = 'Update', language_language_code = language.language_code, language_language_name = language.language_name, language_dir = language.dir,  )}}
+
+{% endblock %}
