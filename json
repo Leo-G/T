@@ -19,3 +19,21 @@
   }
   
 }
+
+
+
+
+
+
+    
+{
+  "data": {
+    "type": "languages",
+    "attributes": {
+      "dir": "ltr",
+        "language_code": "az45",
+        "language_name": "Aze4rbaijani"
+    }
+  }
+  
+}

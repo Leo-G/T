@@ -1,40 +1,88 @@
-from flask import flash, redirect, url_for
-# CRUD FUNCTIONS
-# Arguments  are data to add, function to redirect to if the add was
-# successful and if not
+# Token Auth functions
+import jwt
+from jwt import DecodeError, ExpiredSignature
+from config import SECRET_KEY
+from datetime import datetime, timedelta
+from functools import wraps
+from flask import g, Blueprint, jsonify, make_response, request
+from flask_restful import Resource, Api
+import flask_restful
+from app.users.models import Users
+from werkzeug.security import check_password_hash
+
+login = Blueprint('login', __name__)
+api = Api(login)
+
+# JWT AUTh process start
+def create_token(user):
+    payload = {
+        'sub': user.id,
+        'iat': datetime.utcnow(),
+        'exp': datetime.utcnow() + timedelta(days=1)
+    }
+    token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+    return token.decode('unicode_escape')
 
 
-def add(data, success_url='', fail_url=''):
-    add = data.add(data)
-    # if does not return any error
-    if not add:
-        flash("Add was successful")
-        return redirect(url_for(success_url))
-    else:
-        message = add
-        flash(message)
-        return redirect(url_for(fail_url))
+def parse_token(req):
+    token = req.headers.get('Authorization').split()[1]
+    return jwt.decode(token, SECRET_KEY, algorithms='HS256')
+
+# Login decorator function
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not request.headers.get('Authorization'):
+            response = jsonify(message='Missing authorization header')
+            response.status_code = 401
+            return response
+
+        try:
+            payload = parse_token(request)
+        except DecodeError:
+            response = jsonify(message='Token is invalid')
+            response.status_code = 401
+            return response
+        except ExpiredSignature:
+            response = jsonify(message='Token has expired')
+            response.status_code = 401
+            return response
+
+        g.user_id = payload['sub']
+
+        return f(*args, **kwargs)
+
+    return decorated_function
+
+# JWT AUTh process end
+
+class Auth(Resource):
+
+    def post(self):
+        raw_dict = request.get_json(force=True)
+        data = raw_dict['data']['attributes']
+        email = data['email']
+        password = data['password']
+        user = Users.query.filter_by(email=email).first()
+        if user == None:
+            response = make_response(
+                jsonify({"message": "invalid username/password"}))
+            response.status_code = 401
+            return response
+        if check_password_hash(user.password, password):
+
+            token = create_token(user)
+            return {'token': token}
+        else:
+            response = make_response(
+                jsonify({"message": "invalid username/password"}))
+            response.status_code = 401
+            return response
+
+api.add_resource(Auth, '/')
 
 
-def update(data, id, success_url='', fail_url=''):
+# Adding the login decorator to the Resource class
+class Resource(flask_restful.Resource):
+    method_decorators = [login_required]
 
-    update = data.update()
-    # if does not return any error
-    if not update:
-        flash("Update was successful")
-        return redirect(url_for(success_url))
-    else:
-        message = update
-        flash(message)
-        return redirect(url_for(fail_url, id=id))
-
-
-def delete(data, fail_url=''):
-    delete = data.delete(data)
-    if not delete:
-        flash("Delete was successful")
-
-    else:
-        message = delete
-        flash(message)
-    return redirect(url_for(fail_url))
