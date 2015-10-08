@@ -17,6 +17,8 @@ marshmallow-jsonapi==0.2.2
 pep8==1.6.2
 psycopg2==2.6.1
 py==1.4.30
+pycrypto==2.6.1
+PyJWT==1.4.0
 PyMySQL==0.6.6
 pytest==2.7.2
 pytz==2015.6

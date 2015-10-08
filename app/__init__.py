@@ -17,5 +17,7 @@ def create_app(config_filename):
     app.register_blueprint(languages, url_prefix='/api/v1/languages')
     from app.users.views import users
     app.register_blueprint(users, url_prefix='/api/v1/users')
+    from app.baseviews import login
+    app.register_blueprint(login, url_prefix='/api/v1/login')
 
     return app
