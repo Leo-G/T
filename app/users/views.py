@@ -31,11 +31,11 @@ class UsersList(Resource):
     def post(self):
         raw_dict = request.get_json(force=True)
         user_dict = raw_dict['data']['attributes']
-        print (user_dict)
         try:
                 schema.validate(user_dict)
                 user = Users(user_dict['email'], generate_password_hash(user_dict['password']), user_dict['name'],user_dict['is_active'], user_dict['role'])
-                user.add(user)                
+                user.add(user) 
+                #Should not return password hash
                 query = Users.query.get(user.id)
                 results = schema.dump(query).data                
                 return results, 201

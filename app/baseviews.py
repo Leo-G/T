@@ -18,7 +18,8 @@ def create_token(user):
     payload = {
         'sub': user.id,
         'iat': datetime.utcnow(),
-        'exp': datetime.utcnow() + timedelta(days=1)
+        'exp': datetime.utcnow() + timedelta(days=1),
+        'scope': user.role
     }
     token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
     return token.decode('unicode_escape')
@@ -53,6 +54,9 @@ def login_required(f):
         return f(*args, **kwargs)
 
     return decorated_function
+
+
+
 
 # JWT AUTh process end
 

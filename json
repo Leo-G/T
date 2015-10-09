@@ -19,21 +19,17 @@
   }
   
 }
+ 
 
 
-
-
-
-
-    
 {
   "data": {
     "type": "languages",
     "attributes": {
-      "dir": "ltr",
-        "language_code": "az45",
-        "language_name": "Aze4rbaijani"
-    }
+      "language_code": "leo",
+      "language_name": "spanish",
+      "dir":"ltr",
+     
+      }
+     }
   }
-  
-}
