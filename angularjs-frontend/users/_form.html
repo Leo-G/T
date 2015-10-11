@@ -1,0 +1,22 @@
+ <fieldset>
+                  <div class="required">
+                      <label for="url">Name</label>
+                      <input class="u-90-width" type="url"  id="name" name="name" ng-model="user.name" required>  
+                  </div>
+                  
+                  <label for="content">Email</label>      
+              <input class="u-90-width" type="email" id="email" name="email"  ng-model="user.email" ng-init="user.email=''">                   
+                   <div class="required">
+                      <label for="password">password</label>
+                      <input class="u-90-width" type="password"  id="password" name="password"  ng-model="user.password" required> 
+                   </div>
+                   <label for="is_active" >Is Active</label>
+                   <input class="u-90-width" type="text"  id="is_active" name="is_active"  ng-model="user.is_active"
+                      > 
+                   <label for="role">Role</label>
+                   <input class="u-90-width" type="text"  id="role" name="role"  ng-model="user.role">                                  
+
+              
+              <button class="button-primary" type="submit"> Save</button>
+              </fieldset>
+       

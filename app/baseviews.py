@@ -55,6 +55,35 @@ def login_required(f):
 
     return decorated_function
 
+def admin_login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not request.headers.get('Authorization'):
+            response = jsonify(message='Missing authorization header')
+            response.status_code = 401
+            return response
+
+        try:
+            payload = parse_token(request)
+            if payload['scope'] != "admin":
+                response = jsonify(error='Admin Access Required')
+                response.status_code = 401
+                return response
+        except DecodeError:
+            response = jsonify(message='Token is invalid')
+            response.status_code = 401
+            return response
+        except ExpiredSignature:
+            response = jsonify(message='Token has expired')
+            response.status_code = 401
+            return response
+
+        g.user_id = payload['sub']
+
+        return f(*args, **kwargs)
+
+    return decorated_function
+
 
 
 
@@ -87,6 +116,9 @@ api.add_resource(Auth, '/')
 
 
 # Adding the login decorator to the Resource class
+#class Resource(flask_restful.Resource):
+#    method_decorators = [login_required]
+    
 class Resource(flask_restful.Resource):
-    method_decorators = [login_required]
+    method_decorators = [admin_login_required]    
 

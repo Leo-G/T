@@ -2,8 +2,9 @@
 from flask import Blueprint, request, jsonify, make_response
 from werkzeug.security import generate_password_hash
 from app.users.models import Users, UsersSchema
-from flask_restful import Resource, Api
+from flask_restful import Api
 from app.basemodels import db
+from app.baseviews import Resource
 from sqlalchemy.exc import SQLAlchemyError
 from marshmallow import ValidationError
 
