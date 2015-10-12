@@ -41,7 +41,7 @@ angular.module('myApp.controllers', []).controller('UserListController', functio
       $scope.error = error.data;
   });
   
-}).controller('UserAddController', function($scope, $state, $stateParams, User, $window) {
+}).controller('UserCreateController', function($scope, $state, $stateParams, User, $window) {
   $scope.user = new User();  //create new site instance. Properties will be set via ng-model on UI
 
   $scope.addUser = function() { //create a new site. Issues a POST to /api/sites
