@@ -8,11 +8,12 @@ from app.roles.models import Roles
 app = create_app('config')
 
 name='Leo'
-email='youremail@leog.in'
+email='ryan@leog.in'
 password=generate_password_hash('password')
-is_enabled=True
-admin_role_name="admin"
-user=Users(email, name,password, is_enabled)
+is_active=True
+admin_role_name=["admin", "support", "translator"]
+role="support"
+
 
 def db_commit():
     try:
@@ -25,11 +26,7 @@ def db_commit():
           return False
 
 with app.app_context():
-    admin_role = Roles(admin_role_name)
-    #no_role = Roles("None")
-    db.session.add_all([admin_role])
-    if db_commit():
-        user_role = Roles.query.filter_by(name=admin_role_name).first()
-        user.roles.append(user_role)
+    
+        user=Users(email,  password,  name, is_active, role)
         db.session.add(user)
         db_commit()

@@ -64,6 +64,7 @@ def admin_login_required(f):
             return response
 
         try:
+            #print(request.headers.get('Authorization'))
             payload = parse_token(request)
             if payload['scope'] != "admin":
                 response = jsonify(error='Admin Access Required')
