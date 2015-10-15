@@ -41,15 +41,28 @@ angular.module('myApp.controllers', []).controller('UserListController', functio
       $scope.error = error.data;
   });
   
-}).controller('UserCreateController', function($scope, $state, $stateParams, User, $window) {
+}).controller('UserCreateController', function($scope, $state, $stateParams, User, $window, toaster) {
   $scope.user = new User();  //create new site instance. Properties will be set via ng-model on UI
 
   $scope.addUser = function() { //create a new site. Issues a POST to /api/sites
     $scope.user.$save(function() {
-      $window.alert("User Saved");
+    toaster.pop({
+                type: 'success',
+                title: 'Sucess',
+                body: "User saved successfully",
+                showCloseButton: true,
+                timeout: 0
+                });
+      
       $state.go('users'); // on success go back to home i.e. sites state.
     }, function(error) {
-    $window.alert(error.data);
+    toaster.pop({
+                type: 'error',
+                title: 'Error',
+                body: error,
+                showCloseButton: true,
+                timeout: 0
+                });
     } );
   };
 }).controller('LoginController', function($auth, $state, $window, $scope, toaster) {	
@@ -74,8 +87,9 @@ angular.module('myApp.controllers', []).controller('UserListController', functio
             $auth.login($scope.credentials).then(function(data) {
 
                 // If login is successful, redirect to users list
-               
-				$state.go('users');
+                 $scope.url = "http://" + $window.location.host + "/admin";
+				//$location.url('/admin/');
+                $window.location.href = $scope.url;
             })
             .catch(function(response){ // If login is unsuccessful, display relevant error message.
                

@@ -39,3 +39,73 @@ fieldset {
   float: right; }
 .u-pull-left {
   float: left; }
+  
+  
+/* Admin Panel  https://css-tricks.com/snippets/css/a-guide-to-flexbox/*/
+
+.flex-nav-container {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  
+  
+}
+
+.flex-container {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  flex-direction: row;
+}
+
+header {
+  background : #e4e4e4;
+  height : 50px;
+  width : 100%;
+}
+
+
+header a {
+        
+        color: #000000;
+        text-decoration: none;
+        margin-right: 10px;
+        
+        
+      }
+
+html, body {
+        height: 100%;
+        margin: 0px;
+    }
+ 
+/* 100% height dependent on parent element */    
+nav {
+   
+    background : #dddddd;
+    height : 100%;
+    width : 10%;
+    
+}
+
+  nav h3 {
+        
+        background : #bbbbbb;
+        text-align: center;
+        height : 30px;
+        width : 100%;
+      }
+nav h3:hover { 
+         background:#aaaaaa;
+         
+        
+}
+
+
+nav a {
+        
+        color: #000000;
+        text-decoration: none;
+        
+        
+      }

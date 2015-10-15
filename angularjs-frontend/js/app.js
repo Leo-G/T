@@ -18,8 +18,8 @@ angular.module('myApp').config(function($stateProvider, $urlRouterProvider, $aut
         }
      
   }).state('users', { // state for showing all users
-    url: '/',
-    templateUrl: 'partials/users.html',
+    url: '/users',
+    templateUrl: 'users/index.html',
     controller: 'UserListController',
     resolve: { //resolve only for authenticated users
           loginRequired: loginRequired
