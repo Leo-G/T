@@ -14,8 +14,12 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
   <link rel="stylesheet" href="css/my.css">
-    
+  <link rel="stylesheet" type="text/css" href="node_modules/angular-grid/dist/angular-grid.css">
+    <link rel="stylesheet" type="text/css" href="node_modules/angular-grid/dist/theme-fresh.css">
      <link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/0.4.15/toaster.min.css" rel="stylesheet" />
+     <link rel="stylesheet" href="//cdn.jsdelivr.net/flexboxgrid/6.3.0/flexboxgrid.min.css" type="text/css" >
+    
+   
    
    
    <!-- JS
@@ -36,35 +40,39 @@
   
   </head>
   
-  <body >
+  <body ng-controller="NavCtrl">
   
-   <div class="container">
-   
-   <div class="row" ng-controller="NavCtrl">
-     <div class="eleven columns" ">
-                                                                                                                                                                                                   
+  
+  <header class="flex-nav-container header" ng-if="isAuthenticated()"> 
+ 
      
-        </div>
         
-        <div style="float: right;" class="one column" ng-if="isAuthenticated()"> 
+        <div > 
           <a href="/#/logout">Logout</a>    
        
-       
+     
    
       </div>
-      
-      <toaster-container></toaster-container>
-    </div>
-   
-    <div class="row">
-      <div class="twelve columns" style="margin-top: 10%;  ">
+    
+    </header>
+  <div  class="flex-container" ng-controller="NavCtrl"> 
+   <nav ng-if="isAuthenticated()">
+     <a ui-sref="users"> <h3>Users</h3></a>      
      
-              
-          <div ui-view style="height: 720px;"></div> <!-- This is where our views will load -->
-     </div>
-    </div>
-  </div>   
+  
+    </nav>
+    
    
+   <section>
+     <toaster-container></toaster-container>     
+     <div ui-view ></div> 
+   </section>
+  </div>
+  
+  
+  
+  
+  
    
    
     

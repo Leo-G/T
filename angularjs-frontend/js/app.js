@@ -7,14 +7,22 @@ angular.module('myApp').config(function($stateProvider, $urlRouterProvider, $aut
             $authProvider.loginUrl = '/api/v1/login/';
 
             
-            $urlRouterProvider.otherwise('/');
+            $urlRouterProvider.otherwise('/login');
             
-  $stateProvider. state('login', {
+  $stateProvider.state('login', {
 	url: '/login',
 	templateUrl: 'partials/login.html',
 	controller: 'LoginController',
     resolve: {
           skipIfLoggedIn: skipIfLoggedIn
+        }
+     
+  }).state('admin', {
+	url: '/admin',
+	templateUrl: 'admin/index.html',
+	//controller: 'LoginController',
+    resolve: {
+          loginRequired: loginRequired
         }
      
   }).state('users', { // state for showing all users

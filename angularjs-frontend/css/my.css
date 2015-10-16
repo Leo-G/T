@@ -56,6 +56,7 @@ fieldset {
   display: -webkit-flex; /* Safari */
   display: flex;
   flex-direction: row;
+  height: 100%;
 }
 
 header {
@@ -84,7 +85,7 @@ nav {
    
     background : #dddddd;
     height : 100%;
-    width : 10%;
+    width : 20%;
     
 }
 

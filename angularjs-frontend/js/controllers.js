@@ -87,9 +87,10 @@ angular.module('myApp.controllers', []).controller('UserListController', functio
             $auth.login($scope.credentials).then(function(data) {
 
                 // If login is successful, redirect to users list
-                 $scope.url = "http://" + $window.location.host + "/admin";
+                // $scope.url = "http://" + $window.location.host + "/admin";
 				//$location.url('/admin/');
-                $window.location.href = $scope.url;
+               // $window.location.href = $scope.url;
+               $state.go('admin');
             })
             .catch(function(response){ // If login is unsuccessful, display relevant error message.
                
