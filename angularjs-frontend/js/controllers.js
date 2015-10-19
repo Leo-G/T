@@ -33,7 +33,10 @@ angular.module('myApp.controllers', []).controller('UserListController', functio
   };
   
   User.get(function(data) {
-    $scope.users = data.data[0].attributes ;
+    $scope.users = [];
+    angular.forEach(data.data, function(value, key){
+           this.push(value.attributes);
+       }, $scope.users);    
     $scope.gridOptions.rowData = $scope.users;
     $scope.gridOptions.api.onNewRows();
     $scope.gridOptions.api.sizeColumnsToFit();

@@ -89,24 +89,48 @@ nav {
     
 }
 
-  nav h3 {
-        
+/*  nav a {
+        color: #000000;
+        text-decoration: none;
         background : #bbbbbb;
         text-align: center;
         height : 30px;
         width : 100%;
       }
-nav h3:hover { 
-         background:#aaaaaa;
+nav a:hover { 
+         background:#aaaaaa; */
          
         
 }
 
 
-nav a {
-        
-        color: #000000;
-        text-decoration: none;
-        
-        
-      }
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+li { width: 100%;
+    float: left;
+}
+
+nav a:link, nav a:visited {
+    display: flex;
+    width: 100%;
+    font-weight: bold;
+    color: #000000;
+    background-color: #bbbbbb;
+    text-align: center;
+    padding: 4px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+nav a:hover, nav a:active {
+    background-color: #aaaaaa;
+}
+
+
+

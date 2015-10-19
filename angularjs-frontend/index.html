@@ -57,8 +57,10 @@
     </header>
   <div  class="flex-container" ng-controller="NavCtrl"> 
    <nav ng-if="isAuthenticated()">
-     <a ui-sref="users"> <h3>Users</h3></a>      
-     
+     <ul>
+      <li><a ui-sref="users"> Users</a> </li> 
+      <li><a ui-sref="users"> Home</a> </li> 
+     </ul>
   
     </nav>
     
