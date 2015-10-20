@@ -34,28 +34,17 @@
     <script type="text/javascript" src="node_modules/satellizer/satellizer.js"></script>
     <script type="text/javascript" src="node_modules/angular-animate/angular-animate.min.js"></script>    
    
-    <script src="node_modules/angular-grid/dist/angular-grid.js"></script>
- 
-    
+    <script src="node_modules/angular-grid/dist/angular-grid.js"></script>  
+  </head>  
+<body ng-controller="NavCtrl"> 
   
-  </head>
-  
-  <body ng-controller="NavCtrl">
-  
-  
-  <header class="flex-nav-container header" ng-if="isAuthenticated()"> 
- 
+  <header ng-if="isAuthenticated()">           
      
+        <a href="/#/logout">Logout</a>  
         
-        <div > 
-          <a href="/#/logout">Logout</a>    
-       
-     
-   
-      </div>
+  </header>
     
-    </header>
-  <div  class="flex-container" ng-controller="NavCtrl"> 
+  <div  id='main' ng-controller="NavCtrl"> 
    <nav ng-if="isAuthenticated()">
      <ul>
       <li><a ui-sref="users"> Users</a> </li> 
@@ -65,10 +54,10 @@
     </nav>
     
    
-   <section>
+   <article>
      <toaster-container></toaster-container>     
      <div ui-view ></div> 
-   </section>
+   </article>
   </div>
   
   
