@@ -1,4 +1,4 @@
-angular.module('myApp.controllers', []).controller('UserListController', function($scope, $state,  User, $auth) {
+angular.module('myApp.controllers', []).controller('UserListController', function($scope, $state,  User, $auth, toaster) {
 
 
  var columnDefs = [ {headerName: "Sr No", width: 50, cellRenderer: function(params) {
@@ -43,6 +43,30 @@ angular.module('myApp.controllers', []).controller('UserListController', functio
   }, function(error){
       $scope.error = error.data;
   });
+  
+  
+  $scope.deleteUser = function(selected_id) { // Delete a site. Issues a DELETE to /api/users/:id
+      user = User.get({ id: selected_id});
+      user.$delete({ id: selected_id},function() {
+        toaster.pop({
+                type: 'success',
+                title: 'Sucess',
+                body: "User deleted successfully",
+                showCloseButton: true,
+                timeout: 0
+                });
+        $state.go('users'); //redirect to home
+        $state.reload();
+      }, function(error) {
+         toaster.pop({
+                type: 'error',
+                title: 'Error',
+                body: error,
+                showCloseButton: true,
+                timeout: 0
+                });;
+    });
+    };
   
 }).controller('UserCreateController', function($scope, $state, $stateParams, User, $window, toaster) {
   $scope.user = new User();  //create new site instance. Properties will be set via ng-model on UI
