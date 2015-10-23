@@ -75,20 +75,19 @@ angular.module('myApp.controllers', []).controller('UserListController', functio
     });
     };
   
-}).controller('UserCreateController', function($scope, $state, $stateParams, User, $window, toaster) {
-  $scope.user = new User();  //create new site instance. Properties will be set via ng-model on UI
-
-  $scope.addUser = function() { //create a new site. Issues a POST to /api/sites
-    $scope.user.$save(function() {
-    toaster.pop({
+}).controller('UserEditController', function($scope, $state, $stateParams, toaster, $window, User) {
+  $scope.updateUser = function() { //Update the edited site. Issues a PUT to /api/sites/:id
+    
+    $scope.user.$update({ id: $stateParams.id },function() {
+     toaster.pop({
                 type: 'success',
                 title: 'Sucess',
-                body: "User saved successfully",
+                body: "Update was a success",
                 showCloseButton: true,
                 timeout: 0
                 });
-      
-      $state.go('users'); // on success go back to home i.e. sites state.
+       $window.location.reload();
+      //$state.go('sites'); // on success go back to home i.e. sites state.
     }, function(error) {
     toaster.pop({
                 type: 'error',
@@ -97,8 +96,48 @@ angular.module('myApp.controllers', []).controller('UserListController', functio
                 showCloseButton: true,
                 timeout: 0
                 });
-    } );
+    });
   };
+
+  
+  $scope.loadUser = function() { //Issues a GET request to /api/users/:id to get a user to update
+                       $scope.user = User.get({ id: $stateParams.id },
+                                       function() {}, function(error) {
+                                          toaster.pop({
+                                                type: 'error',
+                                                title: 'Error',
+                                                body: error,
+                                                showCloseButton: true,
+                                                timeout: 0
+                                                });
+                                                });
+                                };
+
+  $scope.loadUser(); // Load a user 
+  }).controller('UserCreateController', function($scope, $state, User, toaster) {
+          $scope.user = new User();  //create new site instance. Properties will be set via ng-model on UI
+
+         $scope.addUser = function() { //create a new site. Issues a POST to /api/sites
+                                $scope.user.$save(function() {
+                                toaster.pop({
+                                            type: 'success',
+                                            title: 'Sucess',
+                                            body: "User saved successfully",
+                                            showCloseButton: true,
+                                            timeout: 0
+                                            });
+                                  
+                                  $state.go('users'); // on success go back to home i.e. sites state.
+                                }, function(error) {
+                                toaster.pop({
+                                            type: 'error',
+                                            title: 'Error',
+                                            body: error,
+                                            showCloseButton: true,
+                                            timeout: 0
+                                            });
+                                           });
+                                 };
 }).controller('LoginController', function($auth, $state, $window, $scope, toaster) {	
 	
 	 $scope.login = function() {

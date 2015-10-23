@@ -32,13 +32,7 @@ angular.module('myApp').config(function($stateProvider, $urlRouterProvider, $aut
     resolve: { //resolve only for authenticated users
           loginRequired: loginRequired
         }
-  }).state('viewSite', { //state for showing single user
-    url: '/users/:id/view',
-    templateUrl: 'users-new/partials/user-view.html',
-    controller: 'SiteViewController',
-    resolve: {
-          loginRequired: loginRequired
-        }
+  
   }).state('newUser', { //state for adding a new user 
     url: '/users/new',
     templateUrl: '/users/add_user.html',
@@ -46,10 +40,10 @@ angular.module('myApp').config(function($stateProvider, $urlRouterProvider, $aut
     resolve: {
           loginRequired: loginRequired
         }
-  }).state('editSite', { //state for updating a user
+  }).state('editUser', { //state for updating a user
     url: '/users/:id/edit',
-    templateUrl: 'users-new/partials/user-edit.html',
-    controller: 'SiteEditController',
+    templateUrl: 'users/edit_user.html',
+    controller: 'UserEditController',
     resolve: {
           loginRequired: loginRequired
         }
