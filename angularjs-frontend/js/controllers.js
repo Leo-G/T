@@ -90,8 +90,13 @@ angular.module('myApp.controllers', []).controller('UserListController', functio
                                 };
 
   $scope.loadUser(); // Load a user 
-  }).controller('UserCreateController', function($scope, $state, User, toaster) {
+  }).controller('UserCreateController', function($scope, $state, User, toaster Role) {
           $scope.user = new User();  //create new site instance. Properties will be set via ng-model on UI
+          $scope.roles =  Role.get(function(data) {
+                                     
+                    function(error){
+                      $scope.error = error.data;
+                                              });
 
          $scope.addUser = function() { //create a new site. Issues a POST to /api/sites
                                 $scope.user.$save(function() {

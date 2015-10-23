@@ -20,7 +20,11 @@
             </div>
             <div class="required">
              <label for="role">Role</label>
-             <input class="u-90-width" type="text"  id="role" name="role"  ng-model="user.data.attributes.role">
+             <select  class="u-90-width" ng-model="user.data.attributes.role">
+                 <option ng-repeat="role in roles" value="{{role}}"> {{role}} </option>
+             </select>
+             
+             
             </div>
                      
               
