@@ -1,34 +1,40 @@
 angular.module('myApp.controllers', []).controller('UserListController', function($scope, $state,  User, $auth, toaster) {
- //Table header definitions  
-        var columnDefs = [ {headerName: "Sr No", width: 50, cellRenderer: function(params) {return params.node.id + 1;}}, 
+         //Table header definitions  
+         var columnDefs = [ {headerName: "Sr No", width: 50, cellRenderer: function(params) {return params.node.id +}}, 
                             {headerName: "email", field: "email", width: 300 },
                             {headerName: "name",  field: "name",  width: 500 }, 
                             {headerName: "is_active", field: "is_active" },                                     
                             {headerName: "role",   field: "role"}
                             ];
+
+
         $scope.gridOptions = { columnDefs: columnDefs,
-                               rowData: null,
-                               enableSorting: true,
-                               enableColResize: true,
-                               rowSelection: 'single',};  
-        User.get(function(data) {
-                     $scope.users = [];
-                     angular.forEach(data.data, function(value, key)
-                                                        {
-                                                       this.user = value.attributes;
-                                                       this.user['id'] = value.id;
-                                                       this.push(this.user);                    
-                                                        },   $scope.users); 
-                    $scope.gridOptions.rowData = $scope.users;
-                    $scope.gridOptions.api.onNewRows();
-                    $scope.gridOptions.api.sizeColumnsToFit();
+                         rowData: null,
+                         enableSorting: true,
+                         enableColResize: true,
+                         rowSelection: 'single',
+
+                        };
+  
+       User.get(function(data) {
+                 $scope.users = [];
+                 angular.forEach(data.data, function(value, key)
+                                                    {
+                                                   this.user = value.attributes;
+                                                   this.user['id'] = value.id;
+                                                   this.push(this.user);
+                    
+                                                    },   $scope.users); 
+                $scope.gridOptions.rowData = $scope.users;
+                $scope.gridOptions.api.onNewRows();
+                $scope.gridOptions.api.sizeColumnsToFit();
                                }, 
                 function(error){
                       $scope.error = error.data;
                                               });
   
   
-   $scope.deleteUser = function(selected_id) { // Delete a User. Issues a DELETE to /api/users/:id
+  $scope.deleteUser = function(selected_id) { // Delete a site. Issues a DELETE to /api/users/:id
       user = User.get({ id: selected_id});
       user.$delete({ id: selected_id},function() {
         toaster.pop({
@@ -114,77 +120,4 @@ angular.module('myApp.controllers', []).controller('UserListController', functio
                                             });
                                            });
                                  };
-}).controller('LoginController', function($auth, $state, $window, $scope, toaster) {	
-	
-	 $scope.login = function() {
-            $scope.credentials = {
-                
-                  "data": {
-                    "type": "users",
-                    "attributes": {                     
-                      "email": $scope.email,
-                      "password": $scope.password,
-                    
-
-                      }
-                     }
-                  }
-            
-            
-            
-            // Use Satellizer's $auth.login method to verify the username and password
-            $auth.login($scope.credentials).then(function(data) {
-
-                // If login is successful, redirect to users list
-                // $scope.url = "http://" + $window.location.host + "/admin";
-				//$location.url('/admin/');
-               // $window.location.href = $scope.url;
-               $state.go('admin');
-            })
-            .catch(function(response){ // If login is unsuccessful, display relevant error message.
-               
-               
-               toaster.pop({
-                type: 'error',
-                title: 'Login Error',
-                body: response.data,
-                showCloseButton: true,
-                timeout: 0
-                });
-               });
-        }
-		
-        
- 
-}).controller('LogoutCtrl', function($auth,  $location, toaster) { // Logout the user if they are authenticated.
-	
-	
-	if (!$auth.isAuthenticated()) { return; }
-     $auth.logout()
-      .then(function() {
-      
-        toaster.pop({
-                type: 'success',               
-                body: 'Logging out' ,
-                showCloseButton: true,
-                
-                });
-        $location.url('/');
-      }); 
-		
-        
- 
-}).controller('NavCtrl', function($auth,  $scope) {
-	
-	//Display the Logout button for authenticated users only
-	$scope.isAuthenticated = function() {
-      return $auth.isAuthenticated();
-    };
-		
-        
- 
 });
-
-
-
-  
