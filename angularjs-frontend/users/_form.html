@@ -21,7 +21,7 @@
             <div class="required">
              <label for="role">Role</label>
              <select  class="u-90-width" ng-model="user.data.attributes.role">
-                 <option ng-repeat="role in roles" value="{{role}}"> {{role}} </option>
+                 <option ng-repeat="role in roles" value="{{role.name}}"> {{role.name}} </option>
              </select>
              
              

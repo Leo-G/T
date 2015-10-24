@@ -1,5 +1,5 @@
-angular.module('myApp.services', []).factory('User', function($resource) {
-  return $resource('api/v1/users/:id', { id:'@user.id' }, {
+angular.module('myApp.services', []).factory('Api', function($resource) {
+  return{User: $resource('api/v1/users/:id', { id:'@user.id' }, {
     update: {
       method: 'PATCH',
       
@@ -8,12 +8,8 @@ angular.module('myApp.services', []).factory('User', function($resource) {
     }
     }, {
     stripTrailingSlashes: false
-    });
-});
-
-
-angular.module('myApp.services', []).factory('Role', function($resource) {
-  return $resource('api/v1/roles/:id', { id:'@role.id' }, {
+    }),
+   Role: $resource('api/v1/roles/:id', { id:'@role.id' }, {
     update: {
       method: 'PATCH',
       
@@ -22,5 +18,7 @@ angular.module('myApp.services', []).factory('Role', function($resource) {
     }
     }, {
     stripTrailingSlashes: false
-    });
+    })
+ }
 });
+

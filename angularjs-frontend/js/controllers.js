@@ -1,4 +1,4 @@
-angular.module('myApp.controllers', []).controller('UserListController', function($scope, $state,  User, $auth, toaster) {
+angular.module('myApp.controllers', []).controller('UserListController', function($scope, $state,  Api, $auth, toaster) {
  //Table header definitions  
         var columnDefs = [ {headerName: "Sr No", width: 50, cellRenderer: function(params) {return params.node.id + 1;}}, 
                             {headerName: "email", field: "email", width: 300 },
@@ -11,7 +11,7 @@ angular.module('myApp.controllers', []).controller('UserListController', functio
                                enableSorting: true,
                                enableColResize: true,
                                rowSelection: 'single',};  
-        User.get(function(data) {
+        Api.User.get(function(data) {
                      $scope.users = [];
                      angular.forEach(data.data, function(value, key)
                                                         {
@@ -29,7 +29,7 @@ angular.module('myApp.controllers', []).controller('UserListController', functio
   
   
    $scope.deleteUser = function(selected_id) { // Delete a User. Issues a DELETE to /api/users/:id
-      user = User.get({ id: selected_id});
+      user = Api.User.get({ id: selected_id});
       user.$delete({ id: selected_id},function() {
         toaster.pop({
                 type: 'success',
@@ -51,7 +51,7 @@ angular.module('myApp.controllers', []).controller('UserListController', functio
     });
     };
   
-}).controller('UserEditController', function($scope, $state, $stateParams, toaster, $window, User) {
+}).controller('UserEditController', function($scope, $state, $stateParams, toaster, $window, Api) {
   $scope.updateUser = function() { //Update the edited site. Issues a PUT to /api/sites/:id
     
     $scope.user.$update({ id: $stateParams.id },function() {
@@ -77,7 +77,7 @@ angular.module('myApp.controllers', []).controller('UserListController', functio
 
   
   $scope.loadUser = function() { //Issues a GET request to /api/users/:id to get a user to update
-                       $scope.user = User.get({ id: $stateParams.id },
+                       $scope.user = Api.User.get({ id: $stateParams.id },
                                        function() {}, function(error) {
                                           toaster.pop({
                                                 type: 'error',
@@ -90,12 +90,26 @@ angular.module('myApp.controllers', []).controller('UserListController', functio
                                 };
 
   $scope.loadUser(); // Load a user 
-  }).controller('UserCreateController', function($scope, $state, User, toaster Role) {
-          $scope.user = new User();  //create new site instance. Properties will be set via ng-model on UI
-          $scope.roles =  Role.get(function(data) {
-                                     
-                    function(error){
-                      $scope.error = error.data;
+  }).controller('UserCreateController', function($scope, $state, Api, toaster, Api) {
+          $scope.user = new Api.User();  //create new site instance. Properties will be set via ng-model on UI
+          Api.Role.get(function(data) {
+                     $scope.roles = [];
+                     angular.forEach(data.data, function(value, key)
+                                                        {
+                                                       this.role = value.attributes;
+                                                       
+                                                       this.push(this.role);                    
+                                                        },   $scope.roles); 
+                   
+                               }, 
+                function(error){
+                     toaster.pop({
+                                            type: 'error',
+                                            title: 'Error',
+                                            body: error.data,
+                                            showCloseButton: true,
+                                            timeout: 0
+                                            });
                                               });
 
          $scope.addUser = function() { //create a new site. Issues a POST to /api/sites
